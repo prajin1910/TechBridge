@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mentors - TechBridge</title>
+    <link rel="icon" href="techbridge.png" type="image/png">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #010000;
+            color: #333;
+        }
+
+        /* Navbar styling */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px 50px;
+            background-color: #fff;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 10;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar .logo img {
+            height: 50px;
+        }
+
+        .navbar .brand h1 {
+            font-size: 24px;
+            color: #020001;
+            margin-bottom: -8px;
+        }
+
+        .navbar .brand p {
+            font-size: 16px;
+            color: #43c53e;
+            margin-top: 5px;
+        }
+
+        .navbar nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+        .navbar nav ul li a {
+            color: #121212;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 10px;
+            font-weight: 700;
+        }
+        .navbar nav ul li a:hover,
+        .navbar nav ul li a.active {
+            color: #FF0077;
+            border-bottom: 2px solid #FF0077;
+        }
+
+        .navbar .buttons a {
+            padding: 15px 28px;
+            border-radius: 5px;
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .navbar .buttons .quote {
+            background-color: #C1E418;
+            color: #121212;
+            font-size: 16px;
+            font-weight: 700;
+            margin-right: 60px;
+        }
+
+        .navbar .buttons .quote:hover {
+            background-color: #A5D40E;
+        }
+        .navbar .buttons .contact:hover {
+            background-color: #007ACC;
+        }
+        .header {
+  position: relative;
+  height: 1200px; /* Adjust according to your design */
+  width: 100%;
+  background-image: url('image2.png'), url('image2.png');
+  background-repeat: no-repeat;
+  background-position: top center, bottom center;
+  background-size: cover, cover; /* Adjust if needed */
+}
+
+        .carousel-container {
+            width: 80%;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .team-section {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .team-members {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .team-member {
+            width: 100%;
+            max-width: 300px;
+            perspective: 1000px;
+        }
+
+        .team-member-inner {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            transform: rotateY(0deg);
+        }
+
+        .team-member:hover .team-member-inner {
+            transform: rotateY(180deg);
+        }
+
+        .team-member-front, .team-member-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .team-member-front {
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            margin-top: 150px;
+        }
+
+        .team-member-front img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+
+        .team-member-front h3 {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .team-member-back {
+            background: #fff;
+            color: #333;
+            transform: rotateY(180deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            margin-top: 150px;
+            text-align: center;
+        }
+
+        .team-member-back .intro {
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        /* Footer Styling */
+        footer {
+            background-color: #0c0632;
+            color: #fff;
+            padding: 80px 0;
+            text-align: left;
+            position: relative;
+            margin-top: 70px;
+            width: 100%;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-info, .footer-links, .footer-social {
+            flex: 1;
+            min-width: 250px;
+            margin: 0 30px;
+        }
+
+        .footer-info h4, .footer-links h4, .footer-social h4 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .footer-info p, .footer-links ul li, .footer-social p {
+            margin: 15px 0;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .footer-info p a, .footer-links ul li a, .footer-social a {
+            color: #7ed320;
+            text-decoration: none;
+        }
+
+        .footer-info p a:hover, .footer-links ul li a:hover, .footer-social a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-links ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-links ul li {
+            margin-bottom: 15px;
+        }
+
+        .footer-social {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .footer-social a {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-social a img {
+            margin-right: 15px;
+            width: 28px;
+            height: 28px;
+        }
+
+        .footer-bottom {
+            background-color: #010101; /* Purple background */
+            padding: 15px 0;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+        }
+
+        .footer-bottom p {
+            margin: 0;
+            font-size: 16px;
+            color: #dcdcdc;
+        }
+
+        .footer-bottom span {
+            color: #7ed320;
+        }
+        #scrollToTopBtn {
+            display: none; /* Hidden by default */
+            position: fixed;
+            bottom: 20px;
+            right: 30px;
+            z-index: 99;
+            width: 50px;
+            height: 50px;
+            border: none;
+            outline: none;
+            background-color: #4CAF50; /* Green background */
+            color: white;
+            cursor: pointer;
+            border-radius: 50%; /* Makes the button circular */
+            font-size: 24px; /* Larger font size for the arrow */
+            text-align: center; /* Centers the arrow horizontally */
+            line-height: 50px; /* Centers the arrow vertically */
+        }       
+        #scrollToTopBtn:hover {
+            background-color: #555; /* Darker background on hover */
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .footer-content {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .footer-info, .footer-links, .footer-social {
+                margin-bottom: 40px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <img src="profile1.png" alt="BigBucks Logo" width="70">
+            </div>
+            <div class="brand">
+                <h1>Tech<span>Bridge</span></h1>
+                <p>I n n o v a t i o n s</p>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html" class="home">Home</a></li>
+                    <li><a href="#" class="active">Mentors</a></li>
+                </ul>
+            </nav>
+            <div class="buttons">
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSdlcgBX194OfWiEHoXUZvMkdymZayaxCb-xehcEOfGxdoFHnw/viewform" class="quote" target="_blank" rel="noopener noreferrer">Register</a>
+            </div>
+        </div>
+    </header>
+    <button id="scrollToTopBtn" title="Go to top">&#8593;</button>
+    <!-- Carousel Section -->
+    <section class="hero">
+        <div class="header">
+        <div class="carousel-container">
+            <div class="team-section">
+                <div class="team-members">
+                    <div class="team-member">
+                        <div class="team-member-inner">
+                            <div class="team-member-front" onclick="window.open('https://www.linkedin.com/in/prajinkumar19/', '_blank')">
+                                <img src="prajin.png" alt="Prajin Kumar P">
+                                <h3>Prajin Kumar P</h3>
+                            </div>
+                            <div class="team-member-back">
+                                <div class="intro">Python Developer<br>Expert in Python programming for data analysis and machine learning.<br>Experienced with Django for web development.<br>Strong knowledge of data visualization tools.<br>Proficient in version control using Git.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="team-member">
+                        <div class="team-member-inner">
+                            <div class="team-member-front" onclick="window.open('https://www.linkedin.com/in/mohanrajg01/', '_blank')">
+                                <img src="mohan.png" alt="MohanRaj M">
+                                <h3>MohanRaj G</h3>
+                            </div>
+                            <div class="team-member-back">
+                                <div class="intro">Java Developer<br>Experienced in building scalable web applications using Java and Spring Boot.<br>Skilled in database management with SQL.<br>Strong problem-solving and debugging skills.<br>Passionate about clean code and best practices.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="team-member">
+                        <div class="team-member-inner">
+                            <div class="team-member-front" onclick="window.open('https://www.linkedin.com/in/nevesh-gokul-2438b92bb/', '_blank')">
+                                <img src="nivesh.png" alt="Nivesh Gokul">
+                                <h3>Nivesh Gokul</h3>
+                            </div>
+                            <div class="team-member-back">
+                                <div class="intro">Full Stack Developer<br>Proficient in both frontend and backend technologies.<br>Experience with React and Node.js.<br>Skilled in building RESTful APIs.<br>Strong understanding of software development lifecycle.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="team-members">
+                    <div class="team-member">
+                        <div class="team-member-inner">
+                            <div class="team-member-front" onclick="window.open('https://www.linkedin.com/in/v-a-padmesh-773a892b6/', '_blank')">
+                                <img src="padmesh.png" alt="Padmesh">
+                                <h3>Padmesh VA</h3>
+                            </div>
+                            <div class="team-member-back">
+                                <div class="intro">Senior Developer<br>Specialized in mobile application development.<br>Experienced with both Android and iOS platforms.<br>Strong expertise in user interface design.<br>Knowledgeable in agile development methodologies.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="team-member">
+                        <div class="team-member-inner">
+                            <div class="team-member-front" onclick="window.open('https://www.linkedin.com/in/marcus-franklin-j-b55275296/', '_blank')">
+                                <img src="franklin.png" alt="Marcus Franklin">
+                                <h3>Marcus Franklin J</h3>
+                            </div>
+                            <div class="team-member-back">
+                                <div class="intro">Technical Head<br>Leadership in overseeing technical projects.<br>Expertise in system architecture design.<br>Proficient in technology stack management.<br>Strong background in team coordination and mentorship.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="team-member">
+                        <div class="team-member-inner">
+                            <div class="team-member-front" onclick="window.open('https://www.linkedin.com/in/nitish-m-80b305293/', '_blank')">
+                                <img src="nitish.png" alt="Nitish">
+                                <h3>Nitish M</h3>
+                            </div>
+                            <div class="team-member-back">
+                                <div class="intro">Project Manager<br>Skilled in managing complex projects.<br>Experience with Agile and Scrum methodologies.<br>Expert in resource allocation and risk management.<br>Strong communication and leadership skills.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Additional profiles start here -->
+                <div class="team-members">
+                    <div class="team-member">
+                        <div class="team-member-inner">
+                            <div class="team-member-front" onclick="window.open('https://www.linkedin.com/in/example1/', '_blank')">
+                                <img src="reksit.png" alt="Profile 7">
+                                <h3>Reksit Rajan</h3>
+                            </div>
+                            <div class="team-member-back">
+                                <div class="intro">Assistant Professor<br>Having experience with Robotic Process Automation (RPA),<br>which enables me to design and implement automated solutions that streamline<br>business processes and enhance operational efficiency.<br></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="team-member">
+                        <div class="team-member-inner">
+                            <div class="team-member-front" onclick="window.open('https://www.linkedin.com/in/example2/', '_blank')">
+                                <img src="padmesh.png" alt="Profile 8">
+                                <h3>Monisha JR</h3>
+                            </div>
+                            <div class="team-member-back">
+                                <div class="intro">Assistance Professor<br>Specialized in<br> UI/UX design,<br>Focusing on creating intuitive and visually appealing user experiences.<br>My expertise lies in translating complex ideas into user-friendly interfaces that enhance usability and engagement.<br></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="team-member">
+                        <div class="team-member-inner">
+                            <div class="team-member-front" onclick="window.open('https://www.linkedin.com/in/example3/', '_blank')">
+                                <img src="hussain.png" alt="Profile 9">
+                                <h3>Mohamed Hussain M</h3>
+                            </div>
+                            <div class="team-member-back">
+                                <div class="intro">Marketing Head<br>Having a strong understanding of marketing.<br>Allowing me to integrate design with effective strategies to enhance brand visibility.<br>and user engagement across platforms.<br></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Additional profiles end here -->
+            </div>
+        </div>
+        </div>
+    </section>
+    <footer>
+        <div class="footer-content">
+            <div class="footer-info">
+                <h4>TechBridge Innovation</h4>
+                <p>No. 37, Bollineni Hillside, Perumbakkam, Chennai, 600100</p>
+                <p><a href="tel:+919025469369">+91 9025469369</a></p>
+                <p>Open Hours: <br> Mon - Sat: 11 am – 5 pm <br> Sunday: CLOSED</p>
+            </div>
+    
+            <div class="footer-links">
+                <h4>Pages</h4>
+                <ul>
+                    <li><a href="privacypolicy.html">Privacy Policy</a></li>
+                    <li><a href="terms.html">Terms and Conditions</a></li>
+                    <li><a href="refund.html">Refund Policy</a></li>
+                </ul>
+            </div>
+    
+            <div class="footer-social">
+                <h4>Follow Us</h4>
+                <a href="https://www.instagram.com/" target="_blank">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram">Instagram
+                </a>
+                <a href="https://www.linkedin.com/" target="_blank">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png" alt="LinkedIn">LinkedIn
+                </a>
+            </div>
+        </div>
+    
+        <div class="footer-bottom">
+            <p>2024 &copy; All rights reserved by <span>TechBridge Innovation</span></p>
+        </div>
+    </footer>
+    
+    <script>
+        const carousel = document.querySelector('.carousel');
+        const nextBtn = document.getElementById('nextBtn');
+        const prevBtn = document.getElementById('prevBtn');
+        let index = 0;
+        const visibleItems = 3; // Number of visible items in the carousel
+        const totalItems = document.querySelectorAll('.team-member').length;
+        const itemWidth = document.querySelector('.team-member').offsetWidth + 30; // Account for margin
+        const carouselWidth = itemWidth * totalItems;
+
+        function updateCarousel() {
+            carousel.style.transform = `translateX(-${index * itemWidth}px)`;
+        }
+
+        nextBtn.addEventListener('click', () => {
+            if (index >= totalItems - visibleItems) return; // Prevent cutting off the last item
+            index++;
+            updateCarousel();
+        });
+
+        prevBtn.addEventListener('click', () => {
+            if (index <= 0) return; // Prevent moving beyond the first item
+            index--;
+            updateCarousel();
+        });
+
+        // Adjust the carousel width on load and resize
+        function adjustCarouselWidth() {
+            document.querySelector('.carousel').style.width = `${carouselWidth}px`;
+        }
+
+        window.addEventListener('resize', () => {
+            adjustCarouselWidth();
+            updateCarousel();
+        });
+
+        adjustCarouselWidth(); // Initial adjustment
+    </script>
+     <script>// Show the button when the user scrolls down 20px from the top
+        window.onscroll = function() {
+          scrollFunction();
+        };
+        
+        function scrollFunction() {
+          var button = document.getElementById("scrollToTopBtn");
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            button.style.display = "block";
+          } else {
+            button.style.display = "none";
+          }
+        }
+        
+        // Scroll back to the top when the button is clicked
+        document.getElementById("scrollToTopBtn").onclick = function() {
+          window.scrollTo({top: 0, behavior: 'smooth'});
+        };
+        </script>
+</body>
+</html>

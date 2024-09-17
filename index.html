@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechBridge</title>
+    <link rel="icon" href="techbridge.png" type="image/png">
+    <!-- Add Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap">
+    <style>
+        /* Basic reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body and font styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #121212;
+            color: #fff;
+            line-height: 1.6;
+            margin-top: 60px; /* To avoid content going under the fixed navbar */
+        }
+
+        /* Navbar styling */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 7px 50px;
+            background-color: #fff;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 10;
+        }
+
+        .navbar .logo img {
+            width: auto;
+            height: 60px;
+        }
+
+        .navbar .brand h1 {
+            color: #020001;
+            font-size: 25px;
+            font-weight: 600;
+        }
+
+        .navbar .brand p {
+            padding-bottom: -10px;
+            margin-top: -10px;
+            font-size: 18px;
+            color: #43c53e;
+        }
+
+        .navbar .brand h1 span {
+            color: #84807d;
+        }
+
+        .navbar nav ul {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+            position: relative; /* Position relative to position the dropdown */
+        }
+
+        .navbar nav ul li {
+            display: inline;
+            position: relative; /* Needed for positioning the dropdown */
+        }
+
+        .navbar nav ul li a {
+            color: #121212;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .navbar nav ul li a.active {
+            color: #FF0077; /* Highlight color for active link */
+            border-bottom: 2px solid #FF0077; /* Optional underline effect */
+        }
+
+        .navbar nav ul li a:hover {
+            color: #FF0077;
+        }
+
+        /* Dropdown styles */
+        .dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: white;
+            color: black;
+            width: 250px;
+            padding: 10px 0;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            display: none;
+            flex-direction: column;
+            opacity: 0;
+            transform: translateY(-10px); /* Start slightly above */
+            transition: all 0.5s ease;
+            z-index: 100; /* Ensure it appears above other elements */
+        }
+
+        /* Dropdown content */
+        .dropdown a {
+            padding: 10px 20px;
+            color: black;
+            text-decoration: none;
+            display: block;
+            font-weight: 500;
+        }
+
+        .dropdown a:hover {
+            background-color: #f1f1f1;
+        }
+
+        /* Show dropdown on hover */
+        .navbar nav ul li:hover .dropdown {
+            display: flex;
+            opacity: 1;
+            transform: translateY(0); /* Animate dropdown to original position */
+        }
+
+        /* Buttons */
+        .navbar .buttons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .navbar .buttons a {
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .navbar .buttons .quote {
+            background-color: #C1E418;
+            color: #121212;
+        }
+
+        .navbar .buttons .quote:hover {
+            background-color: #A5D40E;
+        }
+
+        .navbar .buttons .contact {
+            background-color: #009BFF;
+            color: #fff;
+        }
+
+        .navbar .buttons .contact:hover {
+            background-color: #007ACC;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            background-image: url('image2.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            padding-left: 50px;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(6, 0, 0, 0);
+        }
+
+        .hero-content {
+            position: relative;
+            text-align: left;
+            z-index: 1;
+        }
+
+        .hero-content h2 {
+            font-size: 48px;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            padding-top: 100px;
+            padding-bottom: 5px;
+            color: #fff;
+        }
+
+        .hero-content p {
+            font-size: 16px;
+            color: #43c53e;
+            padding-bottom: 300px;
+        }
+
+        @media (max-width: 768px) {
+            .hero-content h2 {
+                font-size: 36px;
+            }
+
+            .hero-content p {
+                font-size: 14px;
+            }
+        }
+
+        /* "Why Choose Us" Section Styles */
+        .why-choose-us {
+            background-color: #fff;
+            color: #121212;
+            padding: 5px 5px;
+            text-align: center;
+        }
+
+        .why-choose-us h2 {
+            font-size: 20px;
+            color: #121212;
+            margin-top: 5px;
+            margin-bottom: -3px;
+            font-weight: 700;
+        }
+
+        .why-choose-us p {
+            font-size: 30px;
+            margin-bottom: 10px;
+            color: #0f1d88;
+            font-weight: 600;
+        }
+
+        .why-choose-us p.subtitle {
+            font-size: 15px;
+            margin-bottom: 40px;
+            color: #030303;
+            font-weight: 400;
+        }
+
+        /* Services Section */
+        .services {
+            background-color: #fff;
+            color: #121212;
+            padding: 5px 5px;
+            padding-bottom: 60px;
+            text-align: center;
+        }
+
+        .services h2 {
+            font-size: 36px;
+            color: #121212;
+            margin-bottom: 40px;
+            font-weight: 700;
+        }
+
+        .services .service-items {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 130px;
+        }
+
+        .services .service-item {
+            width: 300px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .services .service-item:hover {
+            transform: translateY(-10px);
+        }
+
+        .services .service-item h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #FF0077;
+            font-weight: 700;
+        }
+
+        .services .service-item p {
+            font-size: 16px;
+            color: #555;
+        }
+
+        @media (max-width: 768px) {
+            .services .service-item {
+                width: 100%;
+            }
+        }
+
+        .team-section {
+            text-align: center;
+            padding: -50px 0;
+            margin-top: -40px;
+            background-color: #fff;
+        }
+
+        .team-title {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #242565;
+            line-height: 1.2;
+        }
+        .team-title1 span {
+            color: #323431;
+            font-weight: 600;
+            font-size: medium;
+            
+        }
+
+        .team-title span {
+            color: #7ed320;
+            font-weight: 600;
+        }
+
+        .team-subtitle {
+            font-size: 16px;
+            margin-bottom: 40px;
+            color: #7f8c8d;
+            max-width: 700px;
+            margin: 0 auto 40px auto;
+        }
+
+        .carousel-container {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .carousel {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .team-member {
+            min-width: 370px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            text-align: center;
+            margin: 0 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-top: 6px solid #7ed320;
+            position: relative; 
+            height: 280px; 
+        }
+
+        .team-member img {
+            width: 150px;
+            height: 160px;
+            border-radius: 100%;
+            margin-bottom: 15px;
+            object-fit: cover;
+        }
+
+        .team-member h3 {
+            font-size: 20px;
+            margin-bottom: 5px;
+            color: #242565;
+        }
+
+        .team-member p {
+            font-size: 14px;
+            color: #7f8c8d;
+            margin-top: 0;
+        }
+
+        .plus-icon {
+            width: 25px;
+            height: 25px;
+            background-color: #fff;
+            color: #000;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            font-weight: bold;
+            border: 2px solid #000;
+            position: absolute; /* Position the plus icon absolutely */
+            bottom: 85px; /* Adjust the bottom position */
+            left: 50%;
+            transform: translateX(-50%); /* Center horizontally */
+            transition: background-color 0.3s, transform 0.3s;
+            cursor: pointer;
+        }
+        #scrollToTopBtn {
+            display: none; /* Hidden by default */
+            position: fixed;
+            bottom: 20px;
+            right: 30px;
+            z-index: 99;
+            width: 50px;
+            height: 50px;
+            border: none;
+            outline: none;
+            background-color: #4CAF50; /* Green background */
+            color: white;
+            cursor: pointer;
+            border-radius: 50%; /* Makes the button circular */
+            font-size: 24px; /* Larger font size for the arrow */
+            text-align: center; /* Centers the arrow horizontally */
+            line-height: 50px; /* Centers the arrow vertically */
+        }       
+        #scrollToTopBtn:hover {
+            background-color: #555; /* Darker background on hover */
+        }
+
+        .carousel-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: #fff;
+            border: 2px solid #7ed320;
+            color: #7ed320;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 50%;
+            font-size: 18px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, color 0.3s;
+            z-index: 1;
+        }
+
+        .carousel-arrow.left {
+            left: 10px;
+        }
+
+        .carousel-arrow.right {
+            right: 10px;
+        }
+
+        .carousel-arrow:hover {
+            background-color: #7ed320;
+            color: white;
+        }
+
+        .carousel-arrow:focus {
+            outline: none;
+        }
+         /* Achievements Section */
+         .achievement-section {
+            text-align: center;
+            padding: 80px 0;
+            background-color: #f9f9f9;
+        }
+
+        .achievement-section h1 {
+            font-size: 34px;
+            font-weight: bold;
+            color: #4a00a7;
+            margin-bottom: 50px;
+        }
+
+        .achievement-cards {
+            display: flex;
+            justify-content: space-around;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .achievement-card {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 250px;
+            transition: transform 0.3s ease;
+        }
+
+        .achievement-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .achievement-card .card-number {
+            font-size: 50px;
+            font-weight: bold;
+            color: #74d814;
+            margin-bottom: 10px;
+        }
+
+        .achievement-card .card-text {
+            font-size: 18px;
+            color: #666;
+        }
+
+        .achievement-card h3 {
+            font-size: 22px;
+            font-weight: bold;
+            margin-top: 10px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        .h1 {
+            font-size: 30px;
+            font-weight: bold;
+            color: #74d814;
+            margin-top: -40px;
+            margin-bottom: 2px;
+        }
+
+        h1 span {
+            color: #74d814;
+        }
+        .p.subtitle {
+            font-size: 18px;
+            margin-bottom: 50px;
+            margin-top: -50px;
+            color: #666;
+        }
+        p.haha {
+            font-size: 18px;
+            margin-bottom: 50px;
+            margin-top: -50px;
+            color: #666;
+        }
+        footer {
+            background-color: #0c0632;
+            color: #fff;
+            padding: 80px 0;
+            text-align: left;
+            position: relative;
+            width: 100%;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-info, .footer-links, .footer-social {
+            flex: 1;
+            min-width: 250px;
+            margin: 0 30px;
+        }
+
+        .footer-info h4, .footer-links h4, .footer-social h4 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .footer-info p, .footer-links ul li, .footer-social p {
+            margin: 15px 0;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .footer-info p a, .footer-links ul li a, .footer-social a {
+            color: #7ed320;
+            text-decoration: none;
+        }
+
+        .footer-info p a:hover, .footer-links ul li a:hover, .footer-social a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-links ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-links ul li {
+            margin-bottom: 15px;
+        }
+
+        .footer-social {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .footer-social a {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-social a img {
+            margin-right: 15px;
+            width: 28px;
+            height: 28px;
+        }
+
+        .footer-bottom {
+            background-color: #010101; /* Purple background */
+            padding: 15px 0;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+        }
+
+        .footer-bottom p {
+            margin: 0;
+            font-size: 16px;
+            color: #dcdcdc;
+        }
+
+        .footer-bottom span {
+            color: #7ed320;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .footer-content {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .footer-info, .footer-links, .footer-social {
+                margin-bottom: 40px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <img src="profile1.png" alt="BigBucks Logo" width="70">
+            </div>
+            <div class="brand">
+                <h1>Tech<span>Bridge</span></h1>
+                <p>I n n o v a t i o n s</p>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#" class="active">Home</a></li>
+                    <li>
+                        <a href="#">Services</a>
+                        <!-- Dropdown menu -->
+                        <div class="dropdown">
+                            <a href="https://docs.google.com/forms/d/e/1FAIpQLSdlcgBX194OfWiEHoXUZvMkdymZayaxCb-xehcEOfGxdoFHnw/viewform" class="quote" target="_blank" rel="noopener noreferrer">Manufacturing</a>
+                            <a href="https://docs.google.com/forms/d/e/1FAIpQLSdlcgBX194OfWiEHoXUZvMkdymZayaxCb-xehcEOfGxdoFHnw/viewform" class="quote" target="_blank" rel="noopener noreferrer">Internships</a>
+                            <a href="https://docs.google.com/forms/d/e/1FAIpQLSdlcgBX194OfWiEHoXUZvMkdymZayaxCb-xehcEOfGxdoFHnw/viewform" class="quote" target="_blank" rel="noopener noreferrer">Training</a>
+                            <a href="https://docs.google.com/forms/d/e/1FAIpQLSdlcgBX194OfWiEHoXUZvMkdymZayaxCb-xehcEOfGxdoFHnw/viewform" class="quote" target="_blank" rel="noopener noreferrer">Project Mentoring</a>
+                            <a href="https://docs.google.com/forms/d/e/1FAIpQLSdlcgBX194OfWiEHoXUZvMkdymZayaxCb-xehcEOfGxdoFHnw/viewform" class="quote" target="_blank" rel="noopener noreferrer">Mobile Application</a>
+                            <a href="https://docs.google.com/forms/d/e/1FAIpQLSdlcgBX194OfWiEHoXUZvMkdymZayaxCb-xehcEOfGxdoFHnw/viewform" class="quote" target="_blank" rel="noopener noreferrer">Programming</a>
+                            <a href="https://docs.google.com/forms/d/e/1FAIpQLSdlcgBX194OfWiEHoXUZvMkdymZayaxCb-xehcEOfGxdoFHnw/viewform" class="quote" target="_blank" rel="noopener noreferrer">Career Guidance</a>
+                            <a href="https://docs.google.com/forms/d/e/1FAIpQLSdlcgBX194OfWiEHoXUZvMkdymZayaxCb-xehcEOfGxdoFHnw/viewform" class="quote" target="_blank" rel="noopener noreferrer">Web Development</a>
+                            <a href="https://forms.gle/yuQ5JbkrU6enAam96"class="quote" target="_blank" rel="noopener noreferrer">Mentor Apply</a>
+                            <a href="https://forms.gle/xmyhFCiCAHNwrwV88" class="quote" target="_blank" rel="noopener noreferrer">Financial Aid</a>
+                            
+                            
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+            <div class="buttons">
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSdlcgBX194OfWiEHoXUZvMkdymZayaxCb-xehcEOfGxdoFHnw/viewform" class="quote" target="_blank" rel="noopener noreferrer">Register</a>
+                <a href="contact.html" class="contact">Contact us</a>
+            </div>
+        </div>
+    </header>
+    <button id="scrollToTopBtn" title="Go to top">&#8593;</button>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h2>Tomorrow's Innovations, <br> Today's Solutions</h2>
+            <p>We specialize in cutting-edge technologies and forward-thinking strategies to solve today's challenges. <br>Join us in shaping a brighter, more innovative future.</p>
+        </div>
+    </section>
+
+    <!-- Why Choose Us Section -->
+    <section class="why-choose-us">
+        <h2>Why Choose Us?</h2>
+        <p>We are dedicated to making<br> you grow</p>
+        <p class="subtitle">Take Your Career to the Next Level with TechBridge Innovation</p>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services">
+        <h2>Services We Offer</h2>
+        <div class="service-items">
+            <div class="service-item">
+                <h3>Manufacturing</h3>
+                <p>We manufacture products for hackathon-like events and help with your ideas.</p>
+            </div>
+            <div class="service-item">
+                <h3>Internships</h3>
+                <p>We offer internships in various domains such as cybersecurity, full-stack, AI/ML, renewable energy, IoT, etc.</p>
+            </div>
+            <div class="service-item">
+                <h3>Training</h3>
+                <p>We provide trainings in the latest technologies like cybersecurity, ethical hacking, cloud computing, etc.</p>
+            </div>
+            <div class="service-item">
+                <h3>Mobile Application</h3>
+                <p>Elevate your business with custom mobile applications tailored to your needs, ensuring seamless user experiences and advanced functionality.</p>
+            </div>
+            <div class="service-item">
+                <h3>Project Mentoring</h3>
+                <p>Achieve your project goals with our dedicated mentoring and funding guidance, providing you with the insights and support to succeed.</p>
+            </div>
+            <div class="service-item">
+                <h3>Financial Aid</h3>
+                <p>Students can register, apply for the internship. The portal provides detailed information about eligibility criteria and required documents for each scholarship scheme.</p>
+            </div>
+        </div>
+    </section>
+    <section class="team-section">
+        <h2 class="team-title1"><span>Team</span></h2>
+        <h2 class="team-title">We have <span>a great team</span> to help you succeed.</h2>
+        <p class="team-subtitle">Our dedicated team members are committed to your success, providing expert support every step of the way. With a blend of skills and experience, we ensure your projects achieve outstanding results.</p>
+
+        <div class="carousel-container">
+            <button class="carousel-arrow left" id="prevBtn">&#10094;</button>
+            
+            <div class="carousel">
+                <div class="team-member" onclick="window.open('https://www.linkedin.com/in/prajinkumar19/', '_blank')">
+                    <img src="prajin.png" alt="Prajin Kumar P">
+                    <h3>Prajin Kumar P</h3>
+                    <p>Founder & CEO</p>
+                    <div class="plus-icon">+</div>
+                </div>
+                <div class="team-member" onclick="window.open('https://www.linkedin.com/in/mohanrajg01/', '_blank')">
+                    <img src="mohan.png" alt="MohanRaj M">
+                    <h3>MohanRaj G</h3>
+                    <p>Co-Founder & Director</p>
+                    <div class="plus-icon">+</div>
+                </div>
+                <div class="team-member" onclick="window.open('https://www.linkedin.com/in/nevesh-gokul-2438b92bb/', '_blank')">
+                    <img src="nivesh.png" alt="Nivesh Gokul">
+                    <h3>Nivesh Gokul</h3>
+                    <p>Vice President</p>
+                    <div class="plus-icon">+</div>
+                </div>
+                <div class="team-member" onclick="window.open('https://www.linkedin.com/in/v-a-padmesh-773a892b6/', '_blank')">
+                    <img src="padmesh.png" alt="Padmesh">
+                    <h3>Padmesh VA</h3>
+                    <p>Senior Developer</p>
+                    <div class="plus-icon">+</div>
+                </div>
+                <div class="team-member" onclick="window.open('https://www.linkedin.com/in/marcus-franklin-j-b55275296/', '_blank')">
+                    <img src="franklin.png" alt="Marcus Franklin">
+                    <h3>Marcus Franklin J</h3>
+                    <p>Technical Head</p>
+                    <div class="plus-icon">+</div>
+                </div>
+                <div class="team-member" onclick="window.open('https://www.linkedin.com/in/nitish-m-80b305293/', '_blank')">
+                    <img src="nitish.png" alt="Nitish">
+                    <h3>Nitish M</h3>
+                    <p>Project Manager</p>
+                    <div class="plus-icon">+</div>
+                </div>
+                <div class="team-member" onclick="window.open('https://www.linkedin.com/in/mohamedhussain18/', '_blank')">
+                    <img src="hussain.png" alt="Mohammed Hussain">
+                    <h3>Mohamed Hussain M</h3>
+                    <p>Marketing Head</p>
+                    <div class="plus-icon">+</div>
+                </div>
+            </div>
+            
+            <button class="carousel-arrow right" id="nextBtn">&#10095;</button>
+        </div>
+    </section>
+    <!-- Achievements Section -->
+    <section class="achievement-section">
+        <h1>Our Achievements at a Glance: <span>Proven Success</span></h1>
+        <p class="haha">Showcasing Our Commitment to Excellence Through Consistent and Proven Success</p>
+        <div class="achievement-cards">
+            <div class="achievement-card">
+                <div class="card-number">350+</div>
+                <h3>Satisfied Clients</h3>
+                <p class="card-text">We are very happy to serve them!</p>
+            </div>
+            <div class="achievement-card">
+                <div class="card-number">5+</div>
+                <h3>Completed Projects</h3>
+                <p class="card-text">We have done many projects.</p>
+            </div>
+            <div class="achievement-card">
+                <div class="card-number">100%</div>
+                <h3>Success Rate</h3>
+                <p class="card-text">We are alert to be successful!</p>
+            </div>
+            <div class="achievement-card">
+                <div class="card-number">20+</div>
+                <h3>Active Members</h3>
+                <p class="card-text">We have an expert team.</p>
+            </div>
+        </div>
+    </section>
+    <footer>
+        <div class="footer-content">
+            <div class="footer-info">
+                <h4>TechBridge Innovation</h4>
+                <p>No. 37, Bollineni Hillside, Perumbakkam, Chennai, 600100</p>
+                <p><a href="tel:+919025469369">+91 9025469369</a></p>
+                <p>Open Hours: <br> Mon - Sat: 11 am – 5 pm <br> Sunday: CLOSED</p>
+            </div>
+    
+            <div class="footer-links">
+                <h4>Pages</h4>
+                <ul>
+                    <li><a href="privacypolicy.html">Privacy Policy</a></li>
+                    <li><a href="terms.html">Terms and Conditions</a></li>
+                    <li><a href="refund.html">Refund Policy</a></li>
+                </ul>
+            </div>
+    
+            <div class="footer-social">
+                <h4>Follow Us</h4>
+                <a href="https://www.instagram.com/" target="_blank">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram">Instagram
+                </a>
+                <a href="https://www.linkedin.com/" target="_blank">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png" alt="LinkedIn">LinkedIn
+                </a>
+            </div>
+        </div>
+    
+        <div class="footer-bottom">
+            <p>2024 &copy; All rights reserved by <span>TechBridge Innovation</span></p>
+        </div>
+    </footer>
+    
+    <script>
+        const carousel = document.querySelector('.carousel');
+        const nextBtn = document.getElementById('nextBtn');
+        const prevBtn = document.getElementById('prevBtn');
+        let index = 0;
+        const visibleItems = 3; // Number of visible items in the carousel
+        const totalItems = document.querySelectorAll('.team-member').length;
+        const itemWidth = document.querySelector('.team-member').offsetWidth + 30; // Account for margin
+        const carouselWidth = itemWidth * totalItems;
+
+        function updateCarousel() {
+            carousel.style.transform = `translateX(-${index * itemWidth}px)`;
+        }
+
+        nextBtn.addEventListener('click', () => {
+            if (index >= totalItems - visibleItems) return; // Prevent cutting off the last item
+            index++;
+            updateCarousel();
+        });
+
+        prevBtn.addEventListener('click', () => {
+            if (index <= 0) return; // Prevent moving beyond the first item
+            index--;
+            updateCarousel();
+        });
+
+        // Adjust the carousel width on load and resize
+        function adjustCarouselWidth() {
+            document.querySelector('.carousel').style.width = `${carouselWidth}px`;
+        }
+
+        window.addEventListener('resize', () => {
+            adjustCarouselWidth();
+            updateCarousel();
+        });
+
+        adjustCarouselWidth(); // Initial adjustment
+    </script>
+     <script>// Show the button when the user scrolls down 20px from the top
+        window.onscroll = function() {
+          scrollFunction();
+        };
+        
+        function scrollFunction() {
+          var button = document.getElementById("scrollToTopBtn");
+          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            button.style.display = "block";
+          } else {
+            button.style.display = "none";
+          }
+        }
+        
+        // Scroll back to the top when the button is clicked
+        document.getElementById("scrollToTopBtn").onclick = function() {
+          window.scrollTo({top: 0, behavior: 'smooth'});
+        };
+        </script>
+    
+</body>
+</html>
