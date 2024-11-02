@@ -10,6 +10,31 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 var teacherFormDB = firebase.database().ref('teacherform');
 document.getElementById('registerForm').addEventListener('submit', submitForm);
+function techForm(name, email, number, institution,course, duration, address, referral, qualification, about){
+    const templateParams = {
+        name : name,
+        email : email,
+        pn : number,
+        soc : institution,
+        course : course,
+        duration : duration,
+        add : address,
+        about : about,
+        tellme : referral,
+        quali : qualification,
+    };
+    emailjs.init("UNZ6kkYdQUCyfbvXg");
+    emailjs.send("service_po2j8zp", "template_ip6l54q", templateParams);
+}
+function userForm(name, course, email){
+    const tp = {
+        name : name,
+        course : course,
+        email : email,
+    };
+    emailjs.init("lfUAsR-P8uE-tpxDB");
+    emailjs.send("service_zhidgsi", "template_avuz7ac", tp);
+}
 function submitForm(e){
     e.preventDefault();
 
@@ -23,6 +48,9 @@ function submitForm(e){
     var about = getElementVal('about');
     var qualification = getElementVal('Qualification');
     var referral = getElementVal('referral');
+
+    techForm(name, email, number, institution, course, duration, address, referral, qualification, about);
+    userForm(name, course, email);
 
     saveMessages(name, email, number, address, institution, about, qualification, course, duration, referral);
 }
