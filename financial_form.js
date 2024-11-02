@@ -10,6 +10,31 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 var financialFormDB = firebase.database().ref('financialform');
 document.getElementById('registerForm').addEventListener('submit', submitForm);
+function techForm(name, email, number, institution,annual,reason,course, duration, address, referral){
+    const templateParams = {
+        name : name,
+        email : email,
+        pn : number,
+        soc : institution,
+        annual : annual,
+        reason : reason,
+        course : course,
+        duration : duration,
+        add : address,
+        tellme : referral,
+    };
+    emailjs.init("lfUAsR-P8uE-tpxDB");
+    emailjs.send("service_l5t4foo", "template_xmxicha", templateParams);
+}
+function userForm(name, course, email){
+    const tp = {
+        name : name,
+        course : course,
+        email : email,
+    };
+    emailjs.init("lfUAsR-P8uE-tpxDB");
+    emailjs.send("service_zhidgsi", "template_avuz7ac", tp);
+}
 function submitForm(e){
     e.preventDefault();
 
@@ -18,14 +43,18 @@ function submitForm(e){
     var number = getElementVal('number');
     var address = getElementVal('address');
     var annual = getElementVal('annual');
+    var institution = getElementVal('institution');
     var reason = getElementVal('reason');
     var course = getElementVal('course');
     var duration = getElementVal('duration');
     var referral = getElementVal('referral');
 
-    saveMessages(name, email, number, address, annual, reason, course, duration, referral);
+    techForm(name, email, number, institution,annual,reason,course, duration, address, referral);
+    userForm(name, course, email);
+
+    saveMessages(name, email, number, address, annual, reason, course, duration, referral, institution);
 }
-const saveMessages = (name, email, number, address, annual, reason, course, duration, referral) => {
+const saveMessages = (name, email, number, address, annual, reason, course, duration, referral, institution) => {
     var newFinancialForm = financialFormDB.push();
 
     newFinancialForm.set({
@@ -36,6 +65,7 @@ const saveMessages = (name, email, number, address, annual, reason, course, dura
         annual : annual,
         reason : reason,
         course : course,
+        institution : institution,
         duration : duration,
         referral : referral,
 
