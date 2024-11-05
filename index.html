@@ -398,56 +398,56 @@
 
 
         // Team Member Carousel
-document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function() {
     const carousel = document.querySelector('.carousel');
-    const nextBtn = document.querySelector('.carousel-arrow.right');
-    const prevBtn = document.querySelector('.carousel-arrow.left');
+    const nextBtn = document.getElementById('nextBtn');
+    const prevBtn = document.getElementById('prevBtn');
     let index = 0;
-    const visibleItems = 3; // Default number of visible items
-    const itemWidth = document.querySelector('.team-member').offsetWidth + 30;
+    let visibleItems = 3; // Default number of visible items
     const totalItems = document.querySelectorAll('.team-member').length;
 
-    // Update carousel position
+    // Function to calculate item width and update carousel
     function updateCarousel() {
+        const itemWidth = carousel.offsetWidth / visibleItems; // Adjust item width
         const maxIndex = totalItems - visibleItems;
+
         if (index > maxIndex) index = maxIndex; // Prevent scrolling past the last item
         if (index < 0) index = 0; // Prevent scrolling before the first item
-        carousel.style.transform = `translateX(-${index * itemWidth}px)`;
+
+        carousel.style.transform = `translateX(-${index * itemWidth}px)`; // Update carousel position
     }
 
-    // Next button click
+    // Handle next button click
     nextBtn.addEventListener('click', () => {
         index++;
         updateCarousel();
     });
 
-    // Previous button click
+    // Handle previous button click
     prevBtn.addEventListener('click', () => {
         index--;
         updateCarousel();
     });
 
-    // Adjust carousel on load and resize
+    // Adjust visible items based on container width
     function adjustCarousel() {
-        carousel.style.width = `${itemWidth * totalItems}px`;
         const containerWidth = document.querySelector('.carousel-container').offsetWidth;
 
-        // Adjust visible items based on container width
-        if (containerWidth < 768) {
-            visibleItems = 1;
-        } else if (containerWidth < 1024) {
-            visibleItems = 2;
+        // Change visible items based on screen width
+        if (containerWidth < 480) {
+            visibleItems = 1; // Mobile
+        } else if (containerWidth < 768) {
+            visibleItems = 2; // Tablets
         } else {
-            visibleItems = 3;
+            visibleItems = 3; // Desktop
         }
-        updateCarousel();
+
+        updateCarousel(); // Update carousel after resizing
     }
 
-    // Initial adjustment
+    // Initial setup
     adjustCarousel();
-
-    // Adjust carousel on window resize
-    window.addEventListener('resize', adjustCarousel);
+    window.addEventListener('resize', adjustCarousel); // Adjust on resize
 });
 
 // Recognized Carousel

@@ -676,6 +676,19 @@ html {
     outline: none;
 }
 
+@media (max-width: 768px) {
+    .team-member {
+        width: calc(100% / 2); /* 2 items on medium screens */
+        margin: 0 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .team-member {
+        width: 100%; /* 1 item on small screens */
+    }
+}
+
 /* Recognized Carousel Container */
 .recognized-carousel-container {
     position: relative;
