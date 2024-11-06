@@ -9,6 +9,18 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Add fade and visible classes */
+        .fade {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
 </head>
 <body>
     <div class="container fade">
@@ -62,28 +74,28 @@
             <h2 class="header">Financial Aid Registration-Techbridge</h2>
     
             <form class="register-form" id="registerForm" onsubmit="return validateForm()">
-                <label class="fade" for="name">Name</label>
-                <input class="fade" type="text" id="name" name="name" placeholder="Enter your name" required>
+                <label for="name fade">Name</label>
+                <input type="text" id="name" name="name" placeholder="Enter your name" required>
                 
-                <label class="fade" for="email">Email</label>
-                <input class="fade" type="email" id="email" name="email" placeholder="Enter your email" required>
+                <label for="email fade">Email</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required>
                 
-                <label class="fade" for="number">Phone Number</label>
-                <input  class="fade" type="tel" id="number" name="number" placeholder="Enter your phone number" required>
+                <label for="number fade">Phone Number</label>
+                <input type="tel" id="number" name="number" placeholder="Enter your phone number" required>
 
-                <label class="fade" for="address">Address</label>
-                <input  class="fade" type="text" id="address" name="address" placeholder="Enter your address" required>
+                <label for="address fade">Address</label>
+                <input type="text" id="address" name="address" placeholder="Enter your address" required>
 
-                <label class="fade" for="institution">Institution</label>
-                <input  class="fade" type="text" id="institution" name="institution" placeholder="Enter the name of your educational institution" required>
+                <label for="institution fade">institution</label>
+                <input type="text" id="institution" name="institution" placeholder="Enter the name of your educational institution" required>
 
-                <label class="fade" for="institution">Annual Income</label>
-                <input  class="fade" type="text" id="annual" name="annual" placeholder="Enter your Annual Income" required>
+                <label for="institution fade">Annual Income</label>
+                <input type="text" id="annual" name="annual" placeholder="Enter your Annual Income" required>
             
-                <label class="fade" for="institution">Reason for applying for financial Aid</label>
-                <input  class="fade" type="text" id="reason" name="reason" placeholder="Reason" required>
+                <label for="institution fade">Reason for applying for financial Aid</label>
+                <input type="text" id="reason" name="reason" placeholder="Reason" required>
             
-                <label class="fade" for="course">Which Course you are going to learn</label>
+                <label for="course fade">Which Course you are going to learn</label>
                 <select id="course" name="course" required>
                     <option value="" disabled selected>Select your course</option>
                     <option value="C Programming">C Programming</option>
@@ -101,7 +113,7 @@
                     <option value="AI/ML">AI/ML</option>
                 </select>
             
-                <label class="fade" for="duration">Duration (Days)</label>
+                <label for="duration fade">Duration (Days)</label>
                 <select id="duration" name="duration" required>
                     <option value="" disabled selected>Select duration</option>
                     <option value="15 Days (600 Rs)">15 Days</option>
@@ -110,7 +122,7 @@
                     <option value="Other">Other</option>
                 </select>
                 
-                <label class="fade" for="referral">How do you know TechBridge?</label>
+                <label for="referral fade">How do you know TechBridge?</label>
                 <select id="referral" name="referral" required>
                     <option value="" disabled selected>Select one</option>
                     <option value="School">School</option>
@@ -119,7 +131,7 @@
                     <option value="Other">Other</option>
                 </select>
             
-                <button type="submit" class="register-button fade">Register Now</button>
+                <button type="submit" class="register-button">Register Now</button>
             </form>
     
             <!-- WhatsApp Group Information -->
@@ -180,19 +192,14 @@
     <script>
         // Scroll animation function
         document.addEventListener('DOMContentLoaded', () => {
-        const fadeElements = document.querySelectorAll('.fade');
-
-        const observer = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    entry.target.classList.remove('hidden');
-                } else if (entry.boundingClientRect.top > 0) { // Only fade out if the element is above
-                    entry.target.classList.add('hidden');
-                    entry.target.classList.remove('visible');
-                }
-            });
-        }, { threshold: 0.1 });
+            const fadeElements = document.querySelectorAll('.fade');
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
 
             fadeElements.forEach(element => {
                 observer.observe(element);
