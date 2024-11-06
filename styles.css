@@ -686,6 +686,8 @@ html {
 @media (max-width: 480px) {
     .team-member {
         width: 100%; /* 1 item on small screens */
+        margin: 0 5.5px;
+        min-width: 350px;
     }
 }
 
