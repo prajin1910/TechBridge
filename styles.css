@@ -590,7 +590,7 @@ body.dark .grid-item:active {
 .cover img {
     object-fit: cover;
     object-position: center;
-    width: 60%;
+    width: 43%;
     transition: filter 0.5s ease;
 }
 
