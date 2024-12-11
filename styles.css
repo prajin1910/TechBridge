@@ -586,12 +586,23 @@ body.dark .grid-item:active {
     border: solid;
 }
 
+
 .cover img {
     object-fit: cover;
     object-position: center;
-    width: 60%; /* Reduced size for better balance */
-    padding: 40px;
+    width: 60%;
+    transition: filter 0.5s ease;
 }
+
+
+body.dark .cover img {
+    filter: brightness(1.5);
+    filter: invert(15) brightness(2) contrast(1) grayscale(2) hue-rotate(0deg);
+}
+body.dark .cover{
+    background-color: #171616;
+}
+
 
 .book:hover {
     transform: translateY(-5px); /* Subtle lift on hover */
@@ -610,7 +621,6 @@ body.dark .grid-item:active {
 .book .cover {
     opacity: 1; /* Ensures cover reappears after hover */
 }
-
 @media (max-width:768px) {
     .header-container-2 p{
         font-size: 1.5rem;
